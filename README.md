@@ -1,6 +1,5 @@
 # Planner
 ## Frameworks, Languages, android versions, etc..
-  This application utilizes:
     - XML
     - Java
     - Android SDK: v23 or higher
