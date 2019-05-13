@@ -6,4 +6,11 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name = "MON">MON</string>
+    <string name = "TUE">TUE</string>
+    <string name = "WED">WED</string>
+    <string name = "THU">THU</string>
+    <string name = "FRI">FRI</string>
+    <string name = "SAT">SAT</string>
+    <string name = "SUN">SUN</string>
 </resources>
