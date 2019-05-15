@@ -3,7 +3,6 @@ package ericstephens.planner;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ public class CalendarAdapter extends BaseAdapter {
     private ArrayList<Date> days;
     private Context context;
     private int currentMonth;
+    
     public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays, Calendar calendar, int month)
     {
         this.eventDays = eventDays;
@@ -62,13 +62,10 @@ public class CalendarAdapter extends BaseAdapter {
         Calendar calendarIQ = calendar;
         Date date = getItem(position);
         calendarIQ.setTime(date);
-        Log.d("DEBUG", calendarIQ.get(Calendar.MONTH) + " ");
         int dayCurrent = currentCal.get(Calendar.DATE);
         int monthCurrent = currentCal.get(Calendar.MONTH);
         int month = calendarIQ.get(Calendar.MONTH);
         int year = calendarIQ.get(Calendar.YEAR);
-        Log.d("DEBUG", "IQ month: " + Integer.toString(month));
-        Log.d("DEBUG", "Today month: " + Integer.toString(month));
         // today
         Calendar calendarToday;
         if (month != 0){
@@ -80,7 +77,6 @@ public class CalendarAdapter extends BaseAdapter {
             calendarToday.setTime(current);
 
         }
-        Log.d("DEBUG", calendarToday.get(Calendar.MONTH) + "");
 
 
         // inflate item if it does not exist yet
