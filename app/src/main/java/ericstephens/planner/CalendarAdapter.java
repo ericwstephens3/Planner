@@ -3,6 +3,7 @@ package ericstephens.planner;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,17 @@ public class CalendarAdapter extends BaseAdapter {
     // for view inflation
     private LayoutInflater inflater;
     private HashSet<Date> eventDays;
-
+    private Calendar calendar;
     private ArrayList<Date> days;
     private Context context;
-    public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays)
+    private int currentMonth;
+    public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays, Calendar calendar, int month)
     {
         this.eventDays = eventDays;
         this.days = days;
         this.context = context;
-
+        this.calendar = calendar;
+        this.currentMonth = month;
         inflater = LayoutInflater.from(context);
     }
 
@@ -52,18 +55,33 @@ public class CalendarAdapter extends BaseAdapter {
         View v;
         TextView num;
         ImageView notification;
+        Date current = new Date();
+        Calendar currentCal = Calendar.getInstance();
+        currentCal.setTime(current);
         // day in question
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendarIQ = calendar;
         Date date = getItem(position);
-        calendar.setTime(date);
-        int day = calendar.get(Calendar.DATE);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-
+        calendarIQ.setTime(date);
+        Log.d("DEBUG", calendarIQ.get(Calendar.MONTH) + " ");
+        int dayCurrent = currentCal.get(Calendar.DATE);
+        int monthCurrent = currentCal.get(Calendar.MONTH);
+        int month = calendarIQ.get(Calendar.MONTH);
+        int year = calendarIQ.get(Calendar.YEAR);
+        Log.d("DEBUG", "IQ month: " + Integer.toString(month));
+        Log.d("DEBUG", "Today month: " + Integer.toString(month));
         // today
-        Date today = new Date();
-        Calendar calendarToday = Calendar.getInstance();
-        calendarToday.setTime(today);
+        Calendar calendarToday;
+        if (month != 0){
+            calendarToday = Calendar.getInstance();
+            calendarToday.add(Calendar.MONTH, currentMonth);
+        }
+        else{
+            calendarToday = Calendar.getInstance();
+            calendarToday.setTime(current);
+
+        }
+        Log.d("DEBUG", calendarToday.get(Calendar.MONTH) + "");
+
 
         // inflate item if it does not exist yet
         if (view == null) {
@@ -73,7 +91,7 @@ public class CalendarAdapter extends BaseAdapter {
             if (month != calendarToday.get(Calendar.MONTH) || year != calendarToday.get(Calendar.YEAR)) {
                 // if this day is outside current month, grey it out
                 num.setTextColor(Color.GRAY);
-            } else if (day == calendarToday.get(Calendar.DATE)) {
+            } else if (date.getDate() == currentCal.get(Calendar.DATE) && date.getMonth() == currentCal.get(Calendar.MONTH)) {
                 // if it is today, set it to blue/bold
                 num.setTextColor(Color.GREEN);
                 v.setBackground(context.getDrawable(R.drawable.grid_border_selected));
