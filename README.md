@@ -10,3 +10,7 @@
     - Utilizes a custom calendar widget to show dates and events
     - Stores data locally within an SQLite database as well as a Google  Calendar
     - More to be added as needed
+    
+    
+##TODO
+    -Add Google's JSON file to make sign in function properly
