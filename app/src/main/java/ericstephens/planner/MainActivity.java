@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     View headerView;
     TextView email;
-
+    Button signOut;
+    TextView name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -61,10 +65,18 @@ public class MainActivity extends AppCompatActivity
         headerView = navigationView.getHeaderView(0);
         signIn = headerView.findViewById(R.id.sign_in_button);
         email = headerView.findViewById(R.id.email);
+        signOut = headerView.findViewById(R.id.signOut);
+        name = headerView.findViewById(R.id.name);
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO add google's JSON file to make this work
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
@@ -74,6 +86,21 @@ public class MainActivity extends AppCompatActivity
         fm.beginTransaction().replace(R.id.fragment, new CalendarFragment()).addToBackStack(null).commit();
     }
 
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        if (task.isSuccessful()){
+                            name.setText("");
+                            email.setText("");
+                            signOut.setVisibility(View.INVISIBLE);
+                            signIn.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onStart(){
         super.onStart();
@@ -81,9 +108,17 @@ public class MainActivity extends AppCompatActivity
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null){
             signIn.setVisibility(View.INVISIBLE);
+            email.setText(account.getEmail());
+            name.setText(account.getGivenName());
+            signOut.setVisibility(View.VISIBLE);
         }
-        else
+        else {
             signIn.setVisibility(View.VISIBLE);
+            email.setText("");
+            name.setText("");
+            signOut.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 
@@ -105,7 +140,9 @@ public class MainActivity extends AppCompatActivity
 
             // Signed in successfully, show authenticated UI.
             signIn.setVisibility(View.INVISIBLE);
-            //email.setText(account.getEmail());
+            email.setText(account.getEmail());
+            name.setText(account.getGivenName());
+            signOut.setVisibility(View.VISIBLE);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

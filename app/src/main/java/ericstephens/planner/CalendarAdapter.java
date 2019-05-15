@@ -72,7 +72,7 @@ public class CalendarAdapter extends BaseAdapter {
             notification = v.findViewById(R.id.notif);
             if (month != calendarToday.get(Calendar.MONTH) || year != calendarToday.get(Calendar.YEAR)) {
                 // if this day is outside current month, grey it out
-                num.setTextColor(Color.parseColor("#E0E0E0"));
+                num.setTextColor(Color.GRAY);
             } else if (day == calendarToday.get(Calendar.DATE)) {
                 // if it is today, set it to blue/bold
                 num.setTextColor(Color.GREEN);
