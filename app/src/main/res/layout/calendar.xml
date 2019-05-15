@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <?xml version="1.0" encoding="utf-8"?>
     <!-- days toolbar -->
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -28,7 +26,6 @@
             android:layout_marginLeft="40dp"
             android:layout_toEndOf="@id/date_display"
             android:layout_toRightOf="@id/date_display"
-            android:src=""
             app:srcCompat="@drawable/ic_baseline_navigate_next_24px" />
 
         <LinearLayout
@@ -92,7 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp">
 
         <TextView
             android:layout_width="0dp"
@@ -156,7 +154,12 @@
     <GridView
         android:id="@+id/calendar_grid"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:numColumns="7"/>
+        android:layout_height="wrap_content"
+        android:numColumns="7"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="3dp"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        />
 
 </LinearLayout>

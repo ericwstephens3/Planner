@@ -1,19 +1,15 @@
 package ericstephens.planner;
 
 
-import android.media.Image;
-import android.view.Gravity;
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.content.Context;
-import android.graphics.Color;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,9 +75,8 @@ public class CalendarAdapter extends BaseAdapter {
                 num.setTextColor(Color.parseColor("#E0E0E0"));
             } else if (day == calendarToday.get(Calendar.DATE)) {
                 // if it is today, set it to blue/bold
-                num.setTextColor(Color.WHITE);
-                num.setGravity(Gravity.CENTER);
-                view.setBackgroundResource(R.drawable.round_button);
+                num.setTextColor(Color.GREEN);
+                v.setBackground(context.getDrawable(R.drawable.grid_border_selected));
             }
 
             // set text

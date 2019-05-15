@@ -1,6 +1,7 @@
 package ericstephens.planner;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.GridView;
@@ -26,9 +27,8 @@ public class CalendarView extends LinearLayout {
     GridView gridView;
     HashSet<Date> event;
 
-    public CalendarView(Context context, HashSet<Date> events) {
-        super(context);
-        this.event = events;
+    public CalendarView(Context context, AttributeSet set) {
+        super(context, set);
         initControl(context);
     }
 
@@ -47,27 +47,29 @@ public class CalendarView extends LinearLayout {
     private void updateCalendar(HashSet<Date> events)
     {
         ArrayList<Date> cells = new ArrayList<>();
+        Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
-
         // determine the cell for current month's beginning
         calendar.set(Calendar.DAY_OF_MONTH, 1);
-        int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 2;
 
         // move calendar backwards to the beginning of the week
         calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);
 
-        // fill cells (42 days calendar as per our business logic)
+        // fill cells
         while (cells.size() < 42)
         {
             cells.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+
         gridView.setAdapter(new CalendarAdapter(getContext(), cells, events));
 
         // update grid
         ((CalendarAdapter)gridView.getAdapter()).notifyDataSetChanged();
 
+        calendar.setTime(currentDate);
         // update title
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         txtDateYear.setText(sdf.format(calendar.getTime()));
