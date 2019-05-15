@@ -1,6 +1,7 @@
 package ericstephens.planner;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,9 +32,14 @@ public class CalendarView extends LinearLayout {
     ArrayList<Date> cells = new ArrayList<>();
     int currentMonth = 0; //the current month being displayed as an integer
     CalendarAdapter adapter;
+    Calendar calToSend;
+    Handler handler = new Handler();
+
+
 
     public CalendarView(Context context, AttributeSet set) {
         super(context, set);
+
         initControl(context);
     }
 
@@ -100,7 +106,8 @@ public class CalendarView extends LinearLayout {
 
         // update grid
         //TODO Make updateDataSetChanged work somehow. This is too messy
-        adapter = new CalendarAdapter(getContext(), cells, events, calendar, currentMonth);
+        calToSend = calendar;
+        adapter = new CalendarAdapter(getContext(), cells, event, calToSend, currentMonth);
         gridView.setAdapter(adapter);
 
         if (month != 0) {
@@ -146,11 +153,9 @@ public class CalendarView extends LinearLayout {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-
-
-
         calendar.setTime(currentDate);
-        adapter = new CalendarAdapter(getContext(), cells, events, calendar, 0);
+        calToSend = calendar;
+        adapter = new CalendarAdapter(getContext(), cells, events, calToSend, currentMonth);
         gridView.setAdapter(adapter);
         // update title
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");

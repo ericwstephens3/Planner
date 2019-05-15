@@ -23,9 +23,10 @@ public class CalendarAdapter extends BaseAdapter {
     private ArrayList<Date> days;
     private Context context;
     private int currentMonth;
-    
+
     public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays, Calendar calendar, int month)
     {
+        super();
         this.eventDays = eventDays;
         this.days = days;
         this.context = context;
@@ -100,6 +101,16 @@ public class CalendarAdapter extends BaseAdapter {
             return view;
 
         return v;
+    }
+
+    public void setNewData(Calendar calToSend, HashSet<Date> event, int currentMonth, ArrayList<Date> cells) {
+
+        this.calendar = calToSend;
+        this.eventDays = event;
+        this.currentMonth = currentMonth;
+        this.days = cells;
+        notifyDataSetChanged();
+
     }
 }
 
