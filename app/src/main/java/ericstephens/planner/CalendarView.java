@@ -94,9 +94,15 @@ public class CalendarView extends LinearLayout {
         }
 
         int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 2;
-
-        // move calendar backwards to the beginning of the week
-        calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);
+        Log.d("DEBUG", "MonthBeginningCell: " + Integer.toString(monthBeginningCell));
+        if (monthBeginningCell < 0){
+            calendar.add(Calendar.MONTH, -1);
+            calendar.add(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH) - 6 );
+        }
+        else {
+            // move calendar backwards to the beginning of the week
+            calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);
+        }
         // fill cells
         while (cells.size() < 42)
         {

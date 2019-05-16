@@ -27,6 +27,7 @@ public class CalendarAdapter extends BaseAdapter {
     public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays, Calendar calendar, int month)
     {
         super();
+
         this.eventDays = eventDays;
         this.days = days;
         this.context = context;
