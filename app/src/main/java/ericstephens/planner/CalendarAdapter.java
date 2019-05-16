@@ -64,8 +64,7 @@ public class CalendarAdapter extends BaseAdapter {
         Calendar calendarIQ = calendar;
         Date date = getItem(position);
         calendarIQ.setTime(date);
-        int dayCurrent = currentCal.get(Calendar.DATE);
-        int monthCurrent = currentCal.get(Calendar.MONTH);
+
         int month = calendarIQ.get(Calendar.MONTH);
         int year = calendarIQ.get(Calendar.YEAR);
         // today

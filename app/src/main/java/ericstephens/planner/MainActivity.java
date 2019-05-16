@@ -180,6 +180,11 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        else if (id == R.id.addItem){
+            fm.beginTransaction().replace(R.id.fragment, new AddItemFragment()).addToBackStack(null).commit();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
