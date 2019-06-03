@@ -1,4 +1,4 @@
-# Planner
+# Planner (Moved to Planner_Flutter for cross platform purposes)
 ## Frameworks, Languages, android versions, etc..
     - XML
     - Java
